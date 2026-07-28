@@ -4,6 +4,21 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="color-scheme" content="light dark" />
+		<script>
+			// Resolves the color mode before first paint — the chart's render
+			// event re-stamps it later, but waiting for that flashes light.
+			try {
+				const stored = JSON.parse(localStorage.getItem("sweep-site-settings:v2") || "{}");
+				document.documentElement.dataset.siteTheme =
+					stored.mode === "light" || stored.mode === "dark"
+						? stored.mode
+						: matchMedia("(prefers-color-scheme: dark)").matches
+							? "dark"
+							: "light";
+			} catch {
+				// Storage unavailable: first paint keeps the default light palette.
+			}
+		</script>
 		<meta
 			name="description"
 			content="Sweep — essential software engineering practices, mapped as an interactive roadmap."

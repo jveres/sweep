@@ -71,7 +71,10 @@ app.innerHTML = `
 					aria-controls="intro-body"
 					aria-expanded="true"
 				>
-					<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.25 3.5 5.75 8 10.25 12.5"/></svg>
+					<!-- The glyph sits 0.75 left of the geometric center: a chevron's open
+     side reads heavier, so a centered path looks shifted toward it. The
+     rail state rotates the svg 180°, flipping the correction with it. -->
+					<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3.5 5 8 9.5 12.5"/></svg>
 				</button>
 				<h2 id="intro-title">Introduction</h2>
 			</div>

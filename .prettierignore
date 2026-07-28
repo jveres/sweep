@@ -1,0 +1,4 @@
+# Roadmap Markdown is svg-roadmap dialect: list markers (+, *, -) and
+# emphasis styles are SEMANTIC (grid layout, tree mirroring, descriptions).
+# A Markdown formatter normalizing them silently breaks the chart.
+roadmaps/

@@ -1,0 +1,628 @@
+:root {
+	color-scheme: light;
+	--app-color: #20212a;
+	--app-background: #edeef3;
+	--toolbar-color: #f7f7fb;
+	--toolbar-background: #1e2029;
+	--toolbar-shadow: rgb(20 20 28 / 18%);
+	--eyebrow-color: #a8c3ff;
+	--control-color: #f8f8fc;
+	--control-background: #2c2f3b;
+	--control-border: #4a4d5c;
+	--control-hover: #3b4050;
+	--focus-color: #77a5ff;
+	--divider-color: #cfd1dc;
+	--panel-background: #f8f8fb;
+	--panel-heading-color: #666978;
+	--panel-heading-title: #292b35;
+	--panel-heading-background: #fff;
+	--panel-heading-border: #d9dbe4;
+	--panel-toggle-hover: #ebedf3;
+	--preview-grid: #f1f1f4;
+	--preview-background: #fafafd;
+	--preview-shadow: rgb(24 25 34 / 16%);
+	--error-color: #8b1d1d;
+	--error-background: #fff0f0;
+	--error-border: #e69696;
+	--like-color: #ff7d9c;
+
+	/* Lucide `settings` (ISC license) — used as an alpha mask, so the stroke
+	   color inside the data URI is irrelevant; currentColor paints it. */
+	--settings-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+	font-family:
+		Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	color: var(--app-color);
+	background: var(--app-background);
+	font-synthesis: none;
+
+	/*
+	 * Both panel headings size to this: the chevron in one, the title box in
+	 * the other. Matching the tallest child keeps the two headings equal
+	 * without restating the padding and border arithmetic here.
+	 */
+	--panel-toggle-size: 22px;
+}
+
+:root[data-site-theme="dark"] {
+	color-scheme: dark;
+	--app-color: #e6e7ef;
+	--app-background: #101118;
+	--toolbar-color: #f4f4fa;
+	--toolbar-background: #0d0f16;
+	--toolbar-shadow: rgb(0 0 0 / 32%);
+	--eyebrow-color: #9dbbff;
+	--control-color: #f4f5fb;
+	--control-background: #252834;
+	--control-border: #555969;
+	--control-hover: #343847;
+	--focus-color: #8eb4ff;
+	--divider-color: #30333f;
+	--panel-background: #171922;
+	--panel-heading-color: #a9acba;
+	--panel-heading-title: #f0f1f6;
+	--panel-heading-background: #1c1e28;
+	--panel-heading-border: #343744;
+	--panel-toggle-hover: #2a2d3a;
+	--preview-grid: #20222c;
+	--preview-background: #15171f;
+	--preview-shadow: rgb(0 0 0 / 38%);
+	--error-color: #ffb6b6;
+	--error-background: #351f24;
+	--error-border: #8e4e58;
+	--like-color: #ff8fab;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	min-width: 320px;
+	min-height: 100vh;
+}
+
+button,
+select {
+	font: inherit;
+}
+
+.visually-hidden {
+	position: absolute;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	white-space: nowrap;
+}
+
+.toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 18px 24px;
+	color: var(--toolbar-color);
+	background: var(--toolbar-background);
+	box-shadow: 0 2px 12px var(--toolbar-shadow);
+}
+
+.toolbar h1,
+.eyebrow {
+	margin: 0;
+}
+
+.toolbar h1 {
+	font-size: clamp(20px, 2vw, 28px);
+	letter-spacing: -0.02em;
+}
+
+.eyebrow {
+	margin-bottom: 3px;
+	color: var(--eyebrow-color);
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.actions,
+.theme-picker {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+/* Narrow viewports wrap the controls instead of pushing them off-screen. */
+.actions {
+	flex-wrap: wrap;
+	row-gap: 8px;
+}
+
+.toolbar select {
+	max-width: 100%;
+	min-width: 0;
+}
+
+.theme-picker {
+	font-size: 13px;
+}
+
+button,
+select {
+	height: 28px;
+	font-size: 12.5px;
+	border: 1px solid var(--control-border);
+	border-radius: 7px;
+	color: var(--control-color);
+	background: var(--control-background);
+}
+
+/*
+ * Native select chrome varies wildly — iOS paints a black indicator on the
+ * dark control and pads the box past its text. Opting out of the platform
+ * appearance and drawing the chevron (Lucide `chevrons-up-down`) keeps the
+ * control tight and legible everywhere; the stroke color sits between the
+ * two modes' control colors, which are both near-white.
+ */
+select {
+	appearance: none;
+	padding: 0 24px 0 9px;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e9eaf2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 15 5 5 5-5'/%3E%3Cpath d='m7 9 5-5 5 5'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 7px center;
+	background-size: 11px 11px;
+}
+
+button {
+	padding: 0 12px;
+	font-weight: 650;
+	cursor: pointer;
+}
+
+button:hover {
+	background: var(--control-hover);
+}
+
+button:focus-visible,
+select:focus-visible {
+	outline: 3px solid var(--focus-color);
+	outline-offset: 2px;
+}
+
+/*
+ * Visitor + like counters, dressed as toolbar controls. The visitor badge is
+ * read-only, so it drops the interactive affordances; the like button keeps
+ * them and fills its heart once this visitor has liked.
+ */
+.stat-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	height: 28px;
+	padding: 0 10px;
+	border: 1px solid var(--control-border);
+	border-radius: 7px;
+	color: var(--control-color);
+	background: var(--control-background);
+	font-size: 12.5px;
+	font-weight: 650;
+	font-variant-numeric: tabular-nums;
+}
+
+.stat-badge svg {
+	width: 14px;
+	height: 14px;
+	flex: none;
+}
+
+span.stat-badge {
+	opacity: 0.9;
+}
+
+/*
+ * Before totals arrive (and while the presence socket is down) a badge sits
+ * idle: muted, square, icon only. The count span hides so the flex gap
+ * cannot offset the centered icon.
+ */
+.stat-badge--idle {
+	width: 28px;
+	padding: 0;
+	justify-content: center;
+	opacity: 0.5;
+}
+
+.stat-badge--idle .stat-count {
+	display: none;
+}
+
+.like-button--liked svg {
+	color: var(--like-color);
+	fill: var(--like-color);
+}
+
+/* Presence: a quiet green dot next to how many pages are open right now. */
+.live-dot {
+	flex: none;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #34c47c;
+	box-shadow: 0 0 0 0 rgb(52 196 124 / 55%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.live-dot {
+		animation: live-pulse 2.4s ease-out infinite;
+	}
+
+	@keyframes live-pulse {
+		0% {
+			box-shadow: 0 0 0 0 rgb(52 196 124 / 55%);
+		}
+
+		70% {
+			box-shadow: 0 0 0 5px rgb(52 196 124 / 0%);
+		}
+
+		100% {
+			box-shadow: 0 0 0 0 rgb(52 196 124 / 0%);
+		}
+	}
+}
+
+/* An idle dot goes gray and still: presence is unknown until a frame lands. */
+.stat-badge--idle .live-dot {
+	background: color-mix(in srgb, var(--control-color) 45%, transparent);
+	box-shadow: none;
+	animation: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.like-button svg {
+		transition: transform 140ms ease;
+	}
+
+	.like-button:active svg {
+		transform: scale(1.2);
+	}
+}
+
+/*
+ * The app is viewport-height on every layout: the toolbar pins and the chart
+ * pane is the page's only scroll container — which position:sticky overlays
+ * (the interactive progress panel) require, and which keeps the page from
+ * growing scrollable on phones. dvh tracks iOS's collapsing browser chrome;
+ * the plain 100% height stays as the fallback.
+ */
+html,
+body {
+	height: 100%;
+}
+
+#app {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+@supports (height: 100dvh) {
+	#app {
+		height: 100dvh;
+	}
+}
+
+.toolbar {
+	flex: none;
+}
+
+.workbench {
+	display: grid;
+	grid-template-columns: minmax(320px, 0.72fr) minmax(480px, 1.28fr);
+	gap: 1px;
+	flex: 1;
+	min-height: 0;
+	background: var(--divider-color);
+}
+
+.intro-panel,
+.preview-panel {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	min-width: 0;
+	min-height: 0;
+	background: var(--panel-background);
+}
+
+.preview-panel {
+	position: relative;
+	grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.error {
+	max-width: 560px;
+	margin: 30px auto;
+	padding: 16px;
+	border: 1px solid var(--error-border);
+	border-radius: 8px;
+	color: var(--error-color);
+	background: var(--error-background);
+}
+
+.preview-panel > .error {
+	margin: 0;
+}
+
+.preview-panel > .error[hidden] {
+	display: none;
+}
+
+@media (min-width: 901px) {
+	.workbench {
+		/* Grid tracks default to content-sized minimums; without the zero
+		   floors the panels grow past the viewport instead of scrolling. */
+		grid-template-rows: minmax(0, 1fr);
+	}
+
+	.intro-panel,
+	.preview-panel {
+		grid-template-rows: auto minmax(0, 1fr);
+	}
+}
+
+.panel-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 6px;
+	padding: 10px 16px;
+	border-bottom: 1px solid var(--panel-heading-border);
+	color: var(--panel-heading-color);
+	background: var(--panel-heading-background);
+}
+
+.panel-heading h2 {
+	display: flex;
+	align-items: center;
+	/* Matches the chevron, so a heading without one is exactly as tall. */
+	min-height: var(--panel-toggle-size);
+	margin: 0;
+	margin-right: auto;
+	color: var(--panel-heading-title);
+	font-size: 14px;
+}
+
+/*
+ * Disclosure chevron sitting before the panel title. Overrides the toolbar
+ * button styling, which is built for dark controls on the toolbar.
+ */
+.panel-toggle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: none;
+	width: var(--panel-toggle-size);
+	height: var(--panel-toggle-size);
+	padding: 0;
+	border: 0;
+	border-radius: 5px;
+	color: var(--panel-heading-color);
+	background: none;
+	cursor: pointer;
+}
+
+.panel-toggle:hover {
+	color: var(--panel-heading-title);
+	background: var(--panel-toggle-hover);
+}
+
+.panel-toggle svg {
+	width: 15px;
+	height: 15px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.panel-toggle svg {
+		transition: transform 140ms ease;
+	}
+}
+
+/* The introduction reads as an article: measured line length, quiet scroll,
+   and its text on the same left edge as the heading's "Introduction" title
+   (heading padding + chevron + gap). */
+.intro-body {
+	overflow: auto;
+	min-height: 0;
+	padding: 20px 16px 28px calc(16px + var(--panel-toggle-size) + 6px);
+	font-size: 14px;
+	line-height: 1.65;
+}
+
+.intro-body h3 {
+	margin: 20px 0 6px;
+	color: var(--panel-heading-title);
+	font-size: 13px;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.intro-body h3:first-child {
+	margin-top: 0;
+}
+
+.intro-body p {
+	max-width: 62ch;
+	margin: 0 0 12px;
+}
+
+.intro-body a {
+	color: var(--focus-color);
+}
+
+.intro-credit {
+	margin-top: 20px;
+	padding-top: 12px;
+	border-top: 1px solid var(--panel-heading-border);
+	color: var(--panel-heading-color);
+	font-size: 12.5px;
+}
+
+/*
+ * Introduction collapsed: the panel hides its prose; the collapse treatment
+ * differs per layout below.
+ */
+.workbench--preview-only {
+	grid-template-columns: auto 1fr;
+}
+
+.workbench--preview-only .intro-panel {
+	grid-template-rows: 1fr;
+}
+
+.workbench--preview-only .intro-panel .intro-body {
+	display: none;
+}
+
+/*
+ * Desktop collapse: the roadmap takes the remaining width and the intro
+ * keeps a narrow vertical rail, so the chevron that collapsed it stays in
+ * place. The rail treatment applies exactly where the panels sit side by
+ * side — the stacked layout (≤900px) keeps the heading a plain horizontal
+ * bar in both states.
+ */
+@media (min-width: 901px) {
+	.workbench--preview-only .intro-panel .panel-heading {
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 14px;
+		padding: 10px 9px;
+		border-bottom: 0;
+	}
+
+	.workbench--preview-only .intro-panel h2 {
+		display: block;
+		margin: 0;
+		writing-mode: vertical-rl;
+		font-size: 12.5px;
+		letter-spacing: 0.02em;
+	}
+
+	.workbench--preview-only .panel-toggle svg {
+		transform: rotate(180deg);
+	}
+}
+
+/*
+ * The element's header is the pane's heading — title, dimensions, and the
+ * zoom/download controls all in one bar — and its canvas carries the framed
+ * checkerboard and scrolls.
+ */
+#preview::part(header) {
+	gap: 16px;
+	padding: 10px 16px;
+	border-bottom: 1px solid var(--panel-heading-border);
+	color: var(--panel-heading-color);
+	background: var(--panel-heading-background);
+}
+
+#preview::part(title) {
+	color: var(--panel-heading-title);
+	font-size: 14px;
+}
+
+/*
+ * The element's "…" menu toggle reads better as a settings control here:
+ * the part hook mutes the glyph and paints Lucide's `settings` gear in
+ * currentColor through a mask, so it follows the heading colors in both
+ * modes without touching the element.
+ */
+#preview::part(menu-button) {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0;
+}
+
+#preview::part(menu-button)::before {
+	content: "";
+	flex: none;
+	width: 14px;
+	height: 14px;
+	background: currentColor;
+	-webkit-mask: var(--settings-icon) center / contain no-repeat;
+	mask: var(--settings-icon) center / contain no-repeat;
+}
+
+#preview::part(canvas) {
+	overflow: auto;
+	padding: 20px;
+	background:
+		linear-gradient(45deg, var(--preview-grid) 25%, transparent 25%),
+		linear-gradient(-45deg, var(--preview-grid) 25%, transparent 25%),
+		linear-gradient(45deg, transparent 75%, var(--preview-grid) 75%),
+		linear-gradient(-45deg, transparent 75%, var(--preview-grid) 75%), var(--preview-background);
+	background-position:
+		0 0,
+		0 6px,
+		6px -6px,
+		-6px 0;
+	background-size: 12px 12px;
+}
+
+.preview {
+	overflow: hidden;
+	--roadmap-preview-chart-radius: 4px;
+	--roadmap-preview-chart-shadow: 0 8px 30px var(--preview-shadow);
+}
+
+@media (max-width: 900px) {
+	.toolbar {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 14px;
+	}
+
+	.actions {
+		width: 100%;
+	}
+
+	.theme-picker {
+		flex: 1 1 auto;
+		justify-content: flex-end;
+	}
+
+	.workbench,
+	.workbench--preview-only {
+		grid-template-columns: 1fr;
+		grid-template-rows: minmax(0, auto) minmax(0, 1fr);
+	}
+
+	/*
+	 * Stacked rows are auto-sized, and a grid stretches leftover space into
+	 * them by default. Pin the collapsed header to its content height so the
+	 * roadmap takes the remaining space instead of splitting it.
+	 */
+	.workbench--preview-only {
+		grid-template-rows: auto 1fr;
+	}
+
+	/*
+	 * Stacked panels collapse as an accordion: the bar keeps its layout,
+	 * content, and height; only the chevron turns. The heading border goes
+	 * transparent (not away) so the height cannot shift, leaving the panel
+	 * divider as the single line under the collapsed bar.
+	 */
+	.workbench--preview-only .intro-panel .panel-heading {
+		border-bottom-color: transparent;
+	}
+
+	.workbench--preview-only .panel-toggle svg {
+		transform: rotate(-90deg);
+	}
+
+	.intro-body {
+		max-height: 45vh;
+	}
+}

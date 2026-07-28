@@ -1,0 +1,30 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "sweep-engineering",
+	"main": "./worker/index.ts",
+	"compatibility_date": "2026-07-01",
+	"assets": {
+		"binding": "ASSETS",
+		"not_found_handling": "single-page-application"
+	},
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "STATS",
+				"class_name": "SweepStats"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["SweepStats"]
+		}
+	],
+	"observability": {
+		"enabled": true
+	}
+	// Once the sweep.engineering zone lives in the Cloudflare account, route the
+	// Worker to the apex by uncommenting:
+	// "routes": [{ "pattern": "sweep.engineering", "custom_domain": true }]
+}

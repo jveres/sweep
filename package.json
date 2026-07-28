@@ -1,0 +1,34 @@
+{
+	"name": "sweep-engineering",
+	"private": true,
+	"version": "1.0.0",
+	"description": "sweep.engineering — the Sweep engineering-practices roadmap",
+	"type": "module",
+	"engines": {
+		"node": ">=22"
+	},
+	"packageManager": "pnpm@11.9.0",
+	"scripts": {
+		"roadmaps": "node scripts/build-roadmaps.mjs",
+		"dev": "pnpm run roadmaps && vite",
+		"build": "pnpm run roadmaps && vite build",
+		"preview": "vite preview",
+		"deploy": "pnpm run build && wrangler deploy",
+		"check": "biome check .",
+		"check:fix": "biome check --write .",
+		"format": "biome format --write .",
+		"typecheck": "tsc --noEmit && tsc -p worker --noEmit"
+	},
+	"dependencies": {
+		"svg-roadmap": "file:../svg-roadmap"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.4",
+		"@cloudflare/vite-plugin": "^1.13.0",
+		"@cloudflare/workers-types": "^4.20260501.0",
+		"@types/node": "^26.1.1",
+		"typescript": "^7.0.2",
+		"vite": "^8.1.5",
+		"wrangler": "^4.40.0"
+	}
+}

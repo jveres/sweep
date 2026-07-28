@@ -418,8 +418,10 @@ body {
 }
 
 .panel-toggle svg {
-	width: 15px;
-	height: 15px;
+	/* Even remainder inside the 22px button: an odd icon size leaves a
+	   half-pixel that rounds into a visible 1px offset. */
+	width: 16px;
+	height: 16px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -188,9 +188,9 @@ const storedSettings = loadStoredSettings();
 if (storedSettings.sample && samples[storedSettings.sample]) {
 	sampleSelect.value = storedSettings.sample;
 }
-// The introduction starts collapsed — the roadmap is the page; a stored
-// session that opened it keeps it open.
-setIntroHidden(storedSettings.introHidden !== false);
+// The introduction greets first-time visitors open — it is the site's front
+// door — and afterwards follows whatever the visitor last chose.
+setIntroHidden(storedSettings.introHidden === true);
 
 // The element's own menu is the settings surface; the page only seeds stored
 // values. A programmatic theme or mode overrides the artifact's front-matter,

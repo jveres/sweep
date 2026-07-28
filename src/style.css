@@ -5,12 +5,14 @@
 	--toolbar-color: #f7f7fb;
 	--toolbar-background: #1e2029;
 	--toolbar-shadow: rgb(20 20 28 / 18%);
-	--eyebrow-color: #a8c3ff;
+	/* One accent family: the roadmap library's teal, tinted per role. The
+	   presence green and like pink are semantic, tuned to sit beside it. */
+	--eyebrow-color: #8fd0e2;
 	--control-color: #f8f8fc;
 	--control-background: #2c2f3b;
 	--control-border: #4a4d5c;
 	--control-hover: #3b4050;
-	--focus-color: #77a5ff;
+	--focus-color: #0d7f9e;
 	--divider-color: #cfd1dc;
 	--panel-background: #f8f8fb;
 	--panel-heading-color: #666978;
@@ -24,7 +26,11 @@
 	--error-color: #8b1d1d;
 	--error-background: #fff0f0;
 	--error-border: #e69696;
-	--like-color: #ff7d9c;
+	--like-color: #ef7f9e;
+	--live-color: #3bbd80;
+	--tier-foundation: #1a7f4b;
+	--tier-contextual: #1d66c4;
+	--tier-advanced: #7245c2;
 
 	/* Lucide `settings` (ISC license) — used as an alpha mask, so the stroke
 	   color inside the data URI is irrelevant; currentColor paints it. */
@@ -50,12 +56,12 @@
 	--toolbar-color: #f4f4fa;
 	--toolbar-background: #0d0f16;
 	--toolbar-shadow: rgb(0 0 0 / 32%);
-	--eyebrow-color: #9dbbff;
+	--eyebrow-color: #83cbdf;
 	--control-color: #f4f5fb;
 	--control-background: #252834;
 	--control-border: #555969;
 	--control-hover: #343847;
-	--focus-color: #8eb4ff;
+	--focus-color: #56c1dd;
 	--divider-color: #30333f;
 	--panel-background: #171922;
 	--panel-heading-color: #a9acba;
@@ -69,7 +75,11 @@
 	--error-color: #ffb6b6;
 	--error-background: #351f24;
 	--error-border: #8e4e58;
-	--like-color: #ff8fab;
+	--like-color: #f795ae;
+	--live-color: #46c789;
+	--tier-foundation: #6fd7a2;
+	--tier-contextual: #86b8ff;
+	--tier-advanced: #b79cf5;
 }
 
 * {
@@ -113,9 +123,14 @@ select {
 	margin: 0;
 }
 
+/* The one display face on the page: the brand line as editorial serif;
+   everything else stays the UI sans. */
 .toolbar h1 {
-	font-size: clamp(20px, 2vw, 28px);
-	letter-spacing: -0.02em;
+	font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+	font-size: clamp(23px, 2.3vw, 31px);
+	font-weight: 400;
+	letter-spacing: 0;
+	text-wrap: balance;
 }
 
 .eyebrow {
@@ -155,6 +170,14 @@ select {
 	font-size: 12.5px;
 	border: 1px solid var(--control-border);
 	border-radius: 7px;
+	color: var(--control-color);
+	background: var(--control-background);
+	/* No double-tap zoom delay on touch. */
+	touch-action: manipulation;
+}
+
+/* The dropdown popup does not inherit the control's custom styling. */
+select option {
 	color: var(--control-color);
 	background: var(--control-background);
 }
@@ -248,8 +271,8 @@ span.stat-badge {
 	width: 7px;
 	height: 7px;
 	border-radius: 50%;
-	background: #34c47c;
-	box-shadow: 0 0 0 0 rgb(52 196 124 / 55%);
+	background: var(--live-color);
+	box-shadow: 0 0 0 0 color-mix(in srgb, var(--live-color) 55%, transparent);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -259,15 +282,15 @@ span.stat-badge {
 
 	@keyframes live-pulse {
 		0% {
-			box-shadow: 0 0 0 0 rgb(52 196 124 / 55%);
+			box-shadow: 0 0 0 0 color-mix(in srgb, var(--live-color) 55%, transparent);
 		}
 
 		70% {
-			box-shadow: 0 0 0 5px rgb(52 196 124 / 0%);
+			box-shadow: 0 0 0 5px transparent;
 		}
 
 		100% {
-			box-shadow: 0 0 0 0 rgb(52 196 124 / 0%);
+			box-shadow: 0 0 0 0 transparent;
 		}
 	}
 }
@@ -460,6 +483,48 @@ body {
 
 .intro-body a {
 	color: var(--focus-color);
+}
+
+/*
+ * Tier chips: the chart tags' vocabulary (foundation/contextual/advanced,
+ * green/blue/violet) carried into the prose. Each tier only sets its text
+ * color; the tint derives from it, so one rule serves both color modes.
+ */
+.tier {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 1px 8px;
+	border-radius: 999px;
+	background: color-mix(in srgb, currentColor 13%, transparent);
+	vertical-align: -3px;
+	font-size: 0.9em;
+	font-weight: 600;
+	font-style: normal;
+}
+
+/* Once the harvested legend disc arrives, it takes the pill's left cap. */
+.tier:has(.tier-disc) {
+	padding-left: 3px;
+}
+
+.tier .tier-disc {
+	display: block;
+	flex: none;
+	width: 15px;
+	height: 15px;
+}
+
+.tier--foundation {
+	color: var(--tier-foundation);
+}
+
+.tier--contextual {
+	color: var(--tier-contextual);
+}
+
+.tier--advanced {
+	color: var(--tier-advanced);
 }
 
 .intro-credit {

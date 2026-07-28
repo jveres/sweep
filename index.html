@@ -4,6 +4,9 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="color-scheme" content="light dark" />
+		<!-- The toolbar is dark in both modes; browser chrome matches it. -->
+		<meta name="theme-color" content="#1e2029" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0d0f16" media="(prefers-color-scheme: dark)" />
 		<script>
 			// Resolves the color mode before first paint — the chart's render
 			// event re-stamps it later, but waiting for that flashes light.

@@ -1,3 +1,4 @@
+import "@fontsource/instrument-serif";
 import "svg-roadmap/preview";
 import type { RoadmapPreviewElement } from "svg-roadmap/preview";
 import { installDomMeasurement, registerEmojiArtwork } from "svg-roadmap/viewer";
@@ -218,10 +219,80 @@ new MutationObserver(() => saveSettings()).observe(preview, {
 	attributeFilter: ["theme", "mode", "interactive", "spotlight"],
 });
 
+/**
+ * The intro's tier chips borrow their icon discs from the rendered chart's
+ * legend, the same way the chart's own detail panel builds its tag chips —
+ * so they always match the active theme. Badge paints are CSS variables
+ * scoped to the chart svg; the resolved values are stamped onto the clones.
+ * Without a matching legend (Sweep 1.0 has different tags) a chip simply
+ * stays text-only.
+ */
+const tierNames = ["foundation", "contextual", "advanced"] as const;
+
+function decorateTierChips(): void {
+	const svg = preview.shadowRoot?.querySelector(".chart-stage > svg");
+	if (!svg) return;
+	for (const tier of tierNames) {
+		const chip = document.querySelector(`.tier--${tier}`);
+		if (!chip) continue;
+		const badge = svg.querySelector(
+			`.roadmap__legend-row[data-tag="${tier}"] [data-roadmap-element="badge"]`,
+		);
+		// No matching legend (Sweep 1.0 has different tags): keep the disc the
+		// chip already carries rather than stripping it.
+		if (!badge) continue;
+		chip.querySelector(".tier-disc")?.remove();
+		const circle = badge.querySelector("circle");
+		const use = badge.querySelector("use");
+		const size = Number(circle?.getAttribute("r") ?? 0) * 2 || Number(use?.getAttribute("width"));
+		if (size <= 0) continue;
+		const disc = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		disc.setAttribute("class", "tier-disc");
+		// A one-unit margin keeps the artwork off the viewport edge (Safari
+		// rounding would otherwise shave the disc's bottom).
+		disc.setAttribute("viewBox", `-1 -1 ${size + 2} ${size + 2}`);
+		disc.setAttribute("aria-hidden", "true");
+		const artwork = badge.cloneNode(true) as SVGGElement;
+		artwork.removeAttribute("transform");
+		// The badge glyphs arrive as <use> references into the chart's defs,
+		// which live inside the preview's shadow root — unreachable from the
+		// light DOM. Inline each target into a disc-local <defs> under a
+		// fresh id, so the mini svg is self-contained.
+		const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+		let refIndex = 0;
+		for (const use of artwork.querySelectorAll("use")) {
+			const ref = use.getAttribute("href") ?? use.getAttribute("xlink:href");
+			if (!ref?.startsWith("#")) continue;
+			const target = svg.querySelector(`[id="${CSS.escape(ref.slice(1))}"]`);
+			if (!target) continue;
+			const local = target.cloneNode(true) as SVGElement;
+			const localId = `tier-${tier}-ref-${refIndex}`;
+			refIndex += 1;
+			local.setAttribute("id", localId);
+			use.removeAttribute("xlink:href");
+			use.setAttribute("href", `#${localId}`);
+			defs.append(local);
+		}
+		if (refIndex > 0) disc.append(defs);
+		const originals = [badge, ...badge.querySelectorAll("*")];
+		const clones = [artwork, ...artwork.querySelectorAll("*")];
+		originals.forEach((original, index) => {
+			const target = clones[index];
+			if (!target) return;
+			const computed = getComputedStyle(original);
+			if (original.hasAttribute("fill")) target.setAttribute("fill", computed.fill);
+			if (original.hasAttribute("color")) target.setAttribute("color", computed.color);
+		});
+		disc.append(artwork);
+		chip.prepend(disc);
+	}
+}
+
 // The page chrome follows the chart's resolved light/dark mode.
 preview.addEventListener("roadmap-render", (event) => {
 	const detail = (event as CustomEvent<{ mode: string }>).detail;
 	document.documentElement.dataset.siteTheme = detail.mode;
+	decorateTierChips();
 });
 preview.addEventListener("roadmap-error", (event) => {
 	const detail = (event as CustomEvent<{ message?: string }>).detail;

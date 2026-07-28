@@ -23,8 +23,6 @@
 	],
 	"observability": {
 		"enabled": true
-	}
-	// Once the sweep.engineering zone lives in the Cloudflare account, route the
-	// Worker to the apex by uncommenting:
-	// "routes": [{ "pattern": "sweep.engineering", "custom_domain": true }]
+	},
+	"routes": [{ "pattern": "sweep.engineering", "custom_domain": true }]
 }

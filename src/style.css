@@ -123,13 +123,9 @@ select {
 	margin: 0;
 }
 
-/* The one display face on the page: the brand line as editorial serif;
-   everything else stays the UI sans. */
 .toolbar h1 {
-	font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
-	font-size: clamp(23px, 2.3vw, 31px);
-	font-weight: 400;
-	letter-spacing: 0;
+	font-size: clamp(20px, 2vw, 28px);
+	letter-spacing: -0.02em;
 	text-wrap: balance;
 }
 
@@ -494,7 +490,7 @@ body {
 	display: inline-flex;
 	align-items: center;
 	gap: 5px;
-	padding: 1px 8px;
+	padding: 1px 8px 1px 3px;
 	border-radius: 999px;
 	background: color-mix(in srgb, currentColor 13%, transparent);
 	vertical-align: -3px;
@@ -503,11 +499,8 @@ body {
 	font-style: normal;
 }
 
-/* Once the harvested legend disc arrives, it takes the pill's left cap. */
-.tier:has(.tier-disc) {
-	padding-left: 3px;
-}
-
+/* Static discs in the tier colors, part of the first paint — a circle in
+   the chip's own color carrying the tag glyph, echoing the chart legend. */
 .tier .tier-disc {
 	display: block;
 	flex: none;

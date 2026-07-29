@@ -187,9 +187,12 @@ const storedSettings = loadStoredSettings();
 if (storedSettings.sample && samples[storedSettings.sample]) {
 	sampleSelect.value = storedSettings.sample;
 }
-// The introduction greets first-time visitors open — it is the site's front
-// door — and afterwards follows whatever the visitor last chose.
-setIntroHidden(storedSettings.introHidden === true);
+// The introduction greets first-time visitors open on desktop — it is the
+// site's front door — but starts collapsed on small screens, where it would
+// push the chart below the fold. A returning visitor's last choice wins on
+// both. The breakpoint mirrors the stylesheet's stacked layout.
+const stackedLayout = matchMedia("(max-width: 900px)").matches;
+setIntroHidden(storedSettings.introHidden ?? stackedLayout);
 
 // The element's own menu is the settings surface; the page only seeds stored
 // values. A programmatic theme or mode overrides the artifact's front-matter,

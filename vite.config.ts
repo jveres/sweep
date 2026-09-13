@@ -52,30 +52,4 @@ export default defineConfig({
 	build: {
 		target: "es2024",
 	},
-	resolve: {
-		// pnpm copies file: dependencies into node_modules as a frozen
-		// snapshot, and Vite does not watch node_modules — so svg-roadmap
-		// rebuilds never reached a running dev server. Resolving the imports
-		// straight to the sibling checkout's dist keeps dev AND build on the
-		// live output: rebuild the library and the page reloads itself.
-		alias: [
-			{
-				find: /^svg-roadmap\/(.+)$/,
-				replacement: resolve(root, "../svg-roadmap/dist/$1.js"),
-			},
-		],
-	},
-	optimizeDeps: {
-		// Aliased to real files outside node_modules; never prebundle the
-		// package (a lockfile-keyed cache of a file: dep goes stale silently).
-		exclude: ["svg-roadmap"],
-	},
-	server: {
-		fs: {
-			// pnpm links svg-roadmap (and its comrak-wasm dependency) from the
-			// sibling checkouts, outside this project root — the dev server
-			// needs them on its allow list to serve their files.
-			allow: [root, resolve(root, "../svg-roadmap"), resolve(root, "../comrak-wasm")],
-		},
-	},
 });

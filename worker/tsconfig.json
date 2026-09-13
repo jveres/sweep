@@ -15,7 +15,7 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"skipLibCheck": true,
-		"types": ["@cloudflare/workers-types/2023-07-01"]
+		"types": ["@cloudflare/workers-types"]
 	},
 	"include": ["*.ts"]
 }

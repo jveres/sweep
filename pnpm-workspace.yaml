@@ -1,3 +1,7 @@
+# svg-roadmap depends on the GitHub tag jveres/comrak-wasm#v0.2.0.
+blockExoticSubdeps: false
+
 allowBuilds:
   esbuild: true
+  svg-roadmap@https://codeload.github.com/jveres/svg-roadmap/tar.gz/057911fb167a9766f69059918bd412839472a599: true
   workerd: true

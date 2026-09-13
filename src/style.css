@@ -28,9 +28,8 @@
 	--error-border: #e69696;
 	--like-color: #ef7f9e;
 	--live-color: #3bbd80;
-	--tier-foundation: #1a7f4b;
+	--tier-review: #1a7f4b;
 	--tier-contextual: #1d66c4;
-	--tier-advanced: #7245c2;
 
 	/* Lucide `settings` (ISC license) — used as an alpha mask, so the stroke
 	   color inside the data URI is irrelevant; currentColor paints it. */
@@ -77,9 +76,8 @@
 	--error-border: #8e4e58;
 	--like-color: #f795ae;
 	--live-color: #46c789;
-	--tier-foundation: #6fd7a2;
+	--tier-review: #6fd7a2;
 	--tier-contextual: #86b8ff;
-	--tier-advanced: #b79cf5;
 }
 
 * {
@@ -482,8 +480,8 @@ body {
 }
 
 /*
- * Tier chips: the chart tags' vocabulary (foundation/contextual/advanced,
- * green/blue/violet) carried into the prose. Each tier only sets its text
+ * Reading cues: the chart tags (review/contextual, green/blue) carried
+ * into the prose. Each cue only sets its text
  * color; the tint derives from it, so one rule serves both color modes.
  */
 .tier {
@@ -508,16 +506,12 @@ body {
 	height: 15px;
 }
 
-.tier--foundation {
-	color: var(--tier-foundation);
+.tier--review {
+	color: var(--tier-review);
 }
 
 .tier--contextual {
 	color: var(--tier-contextual);
-}
-
-.tier--advanced {
-	color: var(--tier-advanced);
 }
 
 .intro-credit {

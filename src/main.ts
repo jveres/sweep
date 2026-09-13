@@ -20,9 +20,13 @@ const samples: Readonly<Record<string, RoadmapSample>> = {
 		label: "Sweep 1.1",
 		artifact: "/roadmaps/sweep-1.1.json",
 	},
+	"sweep-1.2": {
+		label: "Sweep 1.2",
+		artifact: "/roadmaps/sweep-1.2.json",
+	},
 };
 
-const defaultSampleId = "sweep-1.1";
+const defaultSampleId = "sweep-1.2";
 
 const app = document.querySelector<HTMLDivElement>("#app");
 if (!app) throw new Error("The app root element is missing.");

@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import { generateRoadmap, initializeRoadmapNode, packRoadmapDocument } from "svg-roadmap";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const sources = ["sweep-1.0", "sweep-1.1"];
+const sources = ["sweep-1.0", "sweep-1.1", "sweep-1.2"];
 const outDir = join(root, "public", "roadmaps");
 
 await initializeRoadmapNode();
